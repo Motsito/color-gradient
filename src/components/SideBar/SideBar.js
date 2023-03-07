@@ -1,12 +1,25 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
+import ColorsContext from '../../context/ColorsContext'
 import "./SideBar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon, faArrowUp } from '@fortawesome/free-solid-svg-icons'
-import { Container } from 'react-bootstrap'
 
 export default function SideBar() {
 
-   const [darkMode, setDarkMode] = useState(false)
+   const {
+      colors,
+      setColors,
+      darkMode,
+      setDarkMode
+   } = useContext(ColorsContext)
+
+   //function that allows color change in state
+
+   const changeColor = (event, colorname) => {
+      setColors({
+         ...colors, [colorname]: event.target.value
+      })
+   }
 
    return (
       <div className="vh-100 side-content">
@@ -25,9 +38,9 @@ export default function SideBar() {
             <div>
                <label>Style</label>
                <div className='d-flex justify-content-between'>
-                  <label for="style1" className='labelButton'>Linear</label>
-                  <label for="style2" className='labelButton'>Radial</label>
-                  <label for="style3" className='labelButton'>Conic</label>
+                     <label htmlFor="style1" className='labelButton'>Linear</label>
+                     <label htmlFor="style2" className='labelButton'>Radial</label>
+                     <label htmlFor="style3" className='labelButton'>Conic</label>
                   <div className='d-none'>
                      <input type="radio" name="style" id="style1" />
                      <input type="radio" name="style" id="style2" />
@@ -39,20 +52,43 @@ export default function SideBar() {
 
             <div className='direction'>
                <label>Direction</label>
-               <div>
-                     <label for="style4">
+               <div className='grid'>
+                     <label htmlFor="style4" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                  <div className="intento">
+                     <label htmlFor="style5" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                     <label htmlFor="style6" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                     <label htmlFor="style7" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                     <label htmlFor="style8" className='labelButton'>
+                     </label>
+                     <label htmlFor="style9" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                     <label htmlFor="style10" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                     <label htmlFor="style11" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                     <label htmlFor="style12" className='labelButton'>
+                        <FontAwesomeIcon icon={faArrowUp} />
+                     </label>
+                  <div className="d-none">
                      <input type="radio" name="style" id="style4" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
-                     <input type="radio" name="style" />
+                     <input type="radio" name="style" id="style5" />
+                     <input type="radio" name="style" id="style6" />
+                     <input type="radio" name="style" id="style7" />
+                     <input type="radio" name="style" id="style8" />
+                     <input type="radio" name="style" id="style9" />
+                     <input type="radio" name="style" id="style10" />
+                     <input type="radio" name="style" id="style11" />
+                     <input type="radio" name="style" id="style12" />
                   </div>
                </div>
             </div>
@@ -60,19 +96,23 @@ export default function SideBar() {
 
             <div className='colors'>
                <label>Colors</label>
-               <div>
-                  <input type="color"/>
-                  <input type="color"/>
-                  <button>Random</button>
+               <div className='d-flex justify-content-between'>
+                  <input type="color" className='labelButton' onChange={(event)=>{changeColor(event, 'color1')}}/>
+                  <input type="color" className='labelButton' onChange={(event)=>{changeColor(event, 'color2')}}/>
+                  <button className='labelButton'>Random</button>
                </div>
             </div>
 
 
             <div>
                <label>Output format</label>
-               <div>
-                  <input type="radio" name="output" />
-                  <input type="radio" name="output" />
+               <div className='outputFormat'>
+                  <label htmlFor="style13" className='labelButton'>Hex</label>
+                  <label htmlFor="style14" className='labelButton'>Rgba</label>
+                  <div className='d-none'>
+                     <input type="radio" name="output" id="style13"/>
+                     <input type="radio" name="output" id="style14"/>
+                  </div>
                </div>
             </div>
 

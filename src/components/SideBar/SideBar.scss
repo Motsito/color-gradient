@@ -1,22 +1,69 @@
 $dark-background: #26293a;
-
+$gray-background: #3d4853;
+$dark-text: #ceddec;
 
 .side-content{
     width: 20em;
     background-color: $dark-background;
     padding: 30px 32px;
-    color: #a7bdcf;
+    color: $dark-text;
     font-weight: 700;
     overflow: hidden;
     
     .labelButton{
+        background-color: $dark-background;
         text-align: center;
         width: 80px;
         height: 32px;
-        border: 2px solid #746c60;
+        border: 2px solid $gray-background;
         border-radius: 6px;
+        font-size: .9rem;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    button{
+        color:$dark-text;
+    }
+    input[type='color']{
+        padding:0;
     }
     input[type="radio"]:checked + labelButton {
         /* Estilos para el label seleccionado */
+    }
+    .grid{
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .colorSelect{
+        padding:0;
+    }
+    .outputFormat{
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .get{
+        button{
+            width: 256px;
+            height: 48px;
+            background: $gray-background;
+            color: #ceddec;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 12px;
+            margin-left: 0;
+            font-size: .8125rem;
+            font-weight: 600;
+            line-height: 3rem;
+            text-decoration: none;
+            border:none;
+        }
+        button:hover{
+            background-color: $dark-text;
+            color:$dark-background;
+        }
     }
 }
