@@ -1,4 +1,4 @@
-import React,{useContext, useState} from 'react'
+import React,{useContext, useEffect} from 'react'
 import ColorsContext from '../../context/ColorsContext'
 import "./SideBar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,12 +6,29 @@ import { faSun, faMoon, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function SideBar() {
 
-   const {
+   const { 
       colors,
-      setColors,
-      darkMode,
-      setDarkMode
+      darkMode, 
+      style,
+      stylesList,
+      direction,
+      directionsList,
+      colorGradient,
+      setColors, 
+      setDarkMode,
+      setStyle,
+      setDirection,
+      setColorGradient,
    } = useContext(ColorsContext)
+
+useEffect(()=>{
+   if(style==="Linear" && direction === ""){
+      setColorGradient(stylesList[style]+"("+colors.color1+","+colors.color2+")")
+   }else{
+      setColorGradient(stylesList[style]+"("+direction+","+colors.color1+","+colors.color2+")")
+   }
+},[colors, direction, style])
+
 
    //function that allows color change in state
 
@@ -19,6 +36,15 @@ export default function SideBar() {
       setColors({
          ...colors, [colorname]: event.target.value
       })
+      changeStyleDirection(direction)
+   }
+
+
+   //function that controls the change in any direction or style
+   const changeStyleDirection = (newDirection) => {
+      console.log(newDirection)
+      //setStyle(stylesList[newStyle])
+      setDirection(newDirection)      
    }
 
    return (
@@ -27,10 +53,9 @@ export default function SideBar() {
             <h4>CSS GRADIENT GENERATOR</h4>
             {
                darkMode?
-               <FontAwesomeIcon icon={faMoon} onClick={()=>{setDarkMode(!darkMode)}}/>:
-               <FontAwesomeIcon icon={faSun}  onClick={()=>{setDarkMode(!darkMode)}}/>
+               <FontAwesomeIcon icon={faMoon} onClick={()=>{setDarkMode(false)}}/>:
+               <FontAwesomeIcon icon={faSun}  onClick={()=>{setDarkMode(true)}}/>
             }
-            
          </div>
 
 
@@ -38,13 +63,22 @@ export default function SideBar() {
             <div>
                <label>Style</label>
                <div className='d-flex justify-content-between'>
-                     <label htmlFor="style1" className='labelButton'>Linear</label>
-                     <label htmlFor="style2" className='labelButton'>Radial</label>
-                     <label htmlFor="style3" className='labelButton'>Conic</label>
+                     <label htmlFor="Linear" className='labelButton'>Linear</label>
+                     <label htmlFor="Radial" className='labelButton'>Radial</label>
+                     <label htmlFor="Conic" className='labelButton'>Conic</label>
                   <div className='d-none'>
-                     <input type="radio" name="style" id="style1" />
-                     <input type="radio" name="style" id="style2" />
-                     <input type="radio" name="style" id="style3" />
+                     <input type="radio" name="style" 
+                     id="Linear" 
+                     checked={style === "linear-gradient"}  
+                     onChange={()=>setStyle("Linear")}/>
+                     <input type="radio" name="style" 
+                     id="Radial" 
+                     checked={style === "-webkit-radial-gradient"} 
+                     onChange={()=>setStyle("Radial")}/>
+                     <input type="radio" name="style" 
+                     id="Conic" 
+                     checked={style === "conic-gradient"}  
+                     onChange={()=>setStyle("Conic")}/>
                   </div>
                </div>
             </div>
@@ -53,42 +87,95 @@ export default function SideBar() {
             <div className='direction'>
                <label>Direction</label>
                <div className='grid'>
-                     <label htmlFor="style4" className='labelButton'>
+                     <label htmlFor="topLeft" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style5" className='labelButton'>
+                     <label htmlFor="top" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style6" className='labelButton'>
+                     <label htmlFor="topRight" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style7" className='labelButton'>
+                     <label htmlFor="left" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style8" className='labelButton'>
-                     </label>
-                     <label htmlFor="style9" className='labelButton'>
+                     {style === "Radial" ? <label htmlFor="center" className='labelButton'></label>:<div></div>}
+                     <label htmlFor="right" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style10" className='labelButton'>
+                     <label htmlFor="bottomLeft" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style11" className='labelButton'>
+                     <label htmlFor="bottom" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                     <label htmlFor="style12" className='labelButton'>
+                     <label htmlFor="bottomRight" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
                   <div className="d-none">
-                     <input type="radio" name="style" id="style4" />
-                     <input type="radio" name="style" id="style5" />
-                     <input type="radio" name="style" id="style6" />
-                     <input type="radio" name="style" id="style7" />
-                     <input type="radio" name="style" id="style8" />
-                     <input type="radio" name="style" id="style9" />
-                     <input type="radio" name="style" id="style10" />
-                     <input type="radio" name="style" id="style11" />
-                     <input type="radio" name="style" id="style12" />
+                     <input 
+                        type= "radio" 
+                        name= "direction" 
+                        id= "topLeft" 
+                        checked= {direction === directionsList[style].topLeft}
+                        onChange= {()=>changeStyleDirection(directionsList[style].topLeft)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="top" 
+                        checked= {direction === directionsList[style].top}
+                        onChange={()=>changeStyleDirection(directionsList[style].top)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="topRight" 
+                        checked= {direction === directionsList[style].topRight}
+                        onChange={()=>changeStyleDirection(directionsList[style].topRight)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="left" 
+                        checked= {direction === directionsList[style].left}
+                        onChange={()=>changeStyleDirection(directionsList[style].left)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="center" 
+                        checked= {direction === directionsList[style].center}
+                        onChange={()=>changeStyleDirection(directionsList[style].center)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="right" 
+                        checked= {direction === directionsList[style].right}
+                        onChange={()=>changeStyleDirection(directionsList[style].right)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="bottomLeft" 
+                        checked= {direction === directionsList[style].bottomLeft}
+                        onChange={()=>changeStyleDirection(directionsList[style].bottomLeft)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="bottom" 
+                        checked= {direction === directionsList[style].bottom}
+                        onChange={()=>changeStyleDirection(directionsList[style].bottom)}
+                     />
+                     <input 
+                        type="radio" 
+                        name="direction" 
+                        id="bottomRight" 
+                        checked= {direction === directionsList[style].bottomRight}
+                        onChange={()=>changeStyleDirection(directionsList[style].bottomRight)}
+                     />
                   </div>
                </div>
             </div>
@@ -107,11 +194,11 @@ export default function SideBar() {
             <div>
                <label>Output format</label>
                <div className='outputFormat'>
-                  <label htmlFor="style13" className='labelButton'>Hex</label>
-                  <label htmlFor="style14" className='labelButton'>Rgba</label>
+                  <label htmlFor="Linear3" className='labelButton'>Hex</label>
+                  <label htmlFor="Linear4" className='labelButton'>Rgba</label>
                   <div className='d-none'>
-                     <input type="radio" name="output" id="style13"/>
-                     <input type="radio" name="output" id="style14"/>
+                     <input type="radio" name="output" id="Linear3"/>
+                     <input type="radio" name="output" id="Linear4"/>
                   </div>
                </div>
             </div>

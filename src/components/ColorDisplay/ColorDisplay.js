@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useContext, useState, useEffect} from 'react'
+import ColorsContext from '../../context/ColorsContext'
+import './ColorDisplay.scss'
 
 export default function ColorDisplay() {
-  return (
-    <div>ColorDisplay</div>
-  )
+
+   const {
+      colorGradient
+   } = useContext(ColorsContext)
+
+   return (
+      <div 
+         className='display' 
+            style ={{ 
+               background: colorGradient
+            }}
+         >
+      </div>
+   )
 }
