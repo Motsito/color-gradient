@@ -23,7 +23,7 @@ export default function SideBar() {
 
    const [currentDirection, setCurrentDirecction] = useState("topLeft")
 useEffect(()=>{
-   if(style==="Linear" && direction === ""){
+   if(direction === ""){
       setColorGradient(stylesList[style].description+"("+colors.color1+","+colors.color2+")")
    }else {
       setColorGradient(stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")")
@@ -55,8 +55,8 @@ useEffect(()=>{
 
    return (
       <div className="vh-100 side-content">
-         <div>
-            <h4>CSS GRADIENT GENERATOR</h4>
+         <div className='mb-4 d-flex justify-content-between' >
+            <h4 className='w-50'>CSS GRADIENT GENERATOR</h4>
             {
                darkMode?
                <FontAwesomeIcon icon={faMoon} onClick={()=>{setDarkMode(false)}}/>:
@@ -68,11 +68,11 @@ useEffect(()=>{
          <div className='settings'>
             <div>
                <label>Style</label>
-               <div className='d-flex justify-content-between'>
+               <div className='d-flex justify-content-between mt-2 mb-3'>
                      <label htmlFor="Linear" className='labelButton'>Linear</label>
                      <label htmlFor="Radial" className='labelButton'>Radial</label>
                      <label htmlFor="Conic" className='labelButton'>Conic</label>
-                  <div className=''>
+                  <div className='d-none'>
                      <input type="radio" name="style" 
                      id="Linear" 
                      checked={style === stylesList.Linear.name}  
@@ -92,33 +92,33 @@ useEffect(()=>{
 
             <div className='direction'>
                <label>Direction</label>
-               <div className='grid'>
+               <div className='grid mt-2 mb-4'>
                      <label htmlFor="topLeft" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp}  className="topLeft"/>
                      </label>
                      <label htmlFor="top" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
                      <label htmlFor="topRight" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp}  className="topRight" />
                      </label>
                      <label htmlFor="left" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp}  className="left" />
                      </label>
                      {style === "Radial" ? <label htmlFor="center" className='labelButton'></label>:<div></div>}
                      <label htmlFor="right" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp}  className="right" />
                      </label>
                      <label htmlFor="bottomLeft" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp} className="bottomLeft" />
                      </label>
                      <label htmlFor="bottom" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp} className="bottom" />
                      </label>
                      <label htmlFor="bottomRight" className='labelButton'>
-                        <FontAwesomeIcon icon={faArrowUp} />
+                        <FontAwesomeIcon icon={faArrowUp} className="bottomRight" />
                      </label>
-                  <div className="">
+                  <div className="d-none">
                      <input 
                         type= "radio" 
                         name= "direction" 
@@ -189,7 +189,7 @@ useEffect(()=>{
 
             <div className='colors'>
                <label>Colors</label>
-               <div className='d-flex justify-content-between'>
+               <div className='d-flex justify-content-between mt-2 mb-3'>
                   <input type="color" className='labelButton' onChange={(event)=>{changeColor(event, 'color1')}}/>
                   <input type="color" className='labelButton' onChange={(event)=>{changeColor(event, 'color2')}}/>
                   <button className='labelButton'>Random</button>
@@ -199,7 +199,7 @@ useEffect(()=>{
 
             <div>
                <label>Output format</label>
-               <div className='outputFormat'>
+               <div className='outputFormat mt-2 mb-4'>
                   <label htmlFor="Linear3" className='labelButton'>Hex</label>
                   <label htmlFor="Linear4" className='labelButton'>Rgba</label>
                   <div className='d-none'>
