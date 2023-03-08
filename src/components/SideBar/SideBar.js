@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import ColorsContext from '../../context/ColorsContext'
 import "./SideBar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,7 +13,6 @@ export default function SideBar() {
       stylesList,
       direction,
       directionsList,
-      colorGradient,
       setColors, 
       setDarkMode,
       setStyle,
@@ -21,14 +20,15 @@ export default function SideBar() {
       setColorGradient,
    } = useContext(ColorsContext)
 
+
+   const [currentDirection, setCurrentDirecction] = useState("topLeft")
 useEffect(()=>{
    if(style==="Linear" && direction === ""){
-      setColorGradient(stylesList[style]+"("+colors.color1+","+colors.color2+")")
-   }else{
-      setColorGradient(stylesList[style]+"("+direction+","+colors.color1+","+colors.color2+")")
+      setColorGradient(stylesList[style].description+"("+colors.color1+","+colors.color2+")")
+   }else {
+      setColorGradient(stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")")
    }
-},[colors, direction, style])
-
+},[colors, direction])
 
    //function that allows color change in state
 
@@ -36,15 +36,21 @@ useEffect(()=>{
       setColors({
          ...colors, [colorname]: event.target.value
       })
-      changeStyleDirection(direction)
    }
 
-
-   //function that controls the change in any direction or style
-   const changeStyleDirection = (newDirection) => {
+   //function that controls the change in any direction
+   const changeDirection = (newDirection, news) => {
       console.log(newDirection)
-      //setStyle(stylesList[newStyle])
-      setDirection(newDirection)      
+      setDirection(newDirection)   
+      setCurrentDirecction(news)   
+      console.log(currentDirection)
+   }
+
+   //function that controls style change
+   const changeStyle = (newStyle) => {
+      console.log(newStyle)
+      setStyle(newStyle)
+      setDirection(directionsList[newStyle])
    }
 
    return (
@@ -66,19 +72,19 @@ useEffect(()=>{
                      <label htmlFor="Linear" className='labelButton'>Linear</label>
                      <label htmlFor="Radial" className='labelButton'>Radial</label>
                      <label htmlFor="Conic" className='labelButton'>Conic</label>
-                  <div className='d-none'>
+                  <div className=''>
                      <input type="radio" name="style" 
                      id="Linear" 
-                     checked={style === "linear-gradient"}  
-                     onChange={()=>setStyle("Linear")}/>
+                     checked={style === stylesList.Linear.name}  
+                     onChange={()=>changeStyle(stylesList.Linear.name)}/>
                      <input type="radio" name="style" 
                      id="Radial" 
-                     checked={style === "-webkit-radial-gradient"} 
-                     onChange={()=>setStyle("Radial")}/>
+                     checked={style === stylesList.Radial.name} 
+                     onChange={()=>changeStyle(stylesList.Radial.name)}/>
                      <input type="radio" name="style" 
                      id="Conic" 
-                     checked={style === "conic-gradient"}  
-                     onChange={()=>setStyle("Conic")}/>
+                     checked={style === stylesList.Conic.name}  
+                     onChange={()=>changeStyle(stylesList.Conic.name)}/>
                   </div>
                </div>
             </div>
@@ -112,69 +118,69 @@ useEffect(()=>{
                      <label htmlFor="bottomRight" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp} />
                      </label>
-                  <div className="d-none">
+                  <div className="">
                      <input 
                         type= "radio" 
                         name= "direction" 
                         id= "topLeft" 
                         checked= {direction === directionsList[style].topLeft}
-                        onChange= {()=>changeStyleDirection(directionsList[style].topLeft)}
+                        onChange= {()=>changeDirection(directionsList[style].topLeft,"topLeft")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="top" 
                         checked= {direction === directionsList[style].top}
-                        onChange={()=>changeStyleDirection(directionsList[style].top)}
+                        onChange={()=>changeDirection(directionsList[style].top,"top")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="topRight" 
                         checked= {direction === directionsList[style].topRight}
-                        onChange={()=>changeStyleDirection(directionsList[style].topRight)}
+                        onChange={()=>changeDirection(directionsList[style].topRight, "topRight")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="left" 
                         checked= {direction === directionsList[style].left}
-                        onChange={()=>changeStyleDirection(directionsList[style].left)}
+                        onChange={()=>changeDirection(directionsList[style].left, "left")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="center" 
                         checked= {direction === directionsList[style].center}
-                        onChange={()=>changeStyleDirection(directionsList[style].center)}
+                        onChange={()=>changeDirection(directionsList[style].center, "center")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="right" 
                         checked= {direction === directionsList[style].right}
-                        onChange={()=>changeStyleDirection(directionsList[style].right)}
+                        onChange={()=>changeDirection(directionsList[style].right, "right")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="bottomLeft" 
                         checked= {direction === directionsList[style].bottomLeft}
-                        onChange={()=>changeStyleDirection(directionsList[style].bottomLeft)}
+                        onChange={()=>changeDirection(directionsList[style].bottomLeft, "bottomLeft")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="bottom" 
                         checked= {direction === directionsList[style].bottom}
-                        onChange={()=>changeStyleDirection(directionsList[style].bottom)}
+                        onChange={()=>changeDirection(directionsList[style].bottom, "bottom")}
                      />
                      <input 
                         type="radio" 
                         name="direction" 
                         id="bottomRight" 
                         checked= {direction === directionsList[style].bottomRight}
-                        onChange={()=>changeStyleDirection(directionsList[style].bottomRight)}
+                        onChange={()=>changeDirection(directionsList[style].bottomRight, "bottomRight")}
                      />
                   </div>
                </div>
