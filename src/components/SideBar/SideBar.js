@@ -22,6 +22,14 @@ export default function SideBar() {
 
 
    const [currentDirection, setCurrentDirecction] = useState("topLeft")
+
+   //useffect that randomizes and select the settings for the first render
+   useEffect(()=>{
+      getRandomHEXColors()
+      changeDirection(directionsList[style].topLeft,"topLeft")
+   },[])
+
+   //useeffect that controls changes occured in colors and direction for the display to render
 useEffect(()=>{
    if(direction === ""){
       setColorGradient(stylesList[style].description+"("+colors.color1+","+colors.color2+")")
@@ -36,6 +44,22 @@ useEffect(()=>{
       setColors({
          ...colors, [colorname]: event.target.value
       })
+   }
+
+   //function that provides random hex number for color
+
+   function RandomColor() {
+      let randomColor = Math.floor(Math.random()*16777215).toString(16);
+      let hexColor = "#" + randomColor;
+      return hexColor;
+   }
+
+   //function that gets both random colors
+   const getRandomHEXColors=()=>{
+      let color1 = RandomColor();
+      let color2 = RandomColor()
+      console.log(color1, color2)
+      setColors({color1,color2})
    }
 
    //function that controls the change in any direction
@@ -54,9 +78,9 @@ useEffect(()=>{
    }
 
    return (
-      <div className="vh-100 side-content">
+      <div className="side-content">
          <div className='mb-4 d-flex justify-content-between' >
-            <h4 className='w-50'>CSS GRADIENT GENERATOR</h4>
+            <h4 className='w-25'>CSS GRADIENT GENERATOR</h4>
             {
                darkMode?
                <FontAwesomeIcon icon={faMoon} onClick={()=>{setDarkMode(false)}}/>:
@@ -68,7 +92,7 @@ useEffect(()=>{
          <div className='settings'>
             <div>
                <label>Style</label>
-               <div className='d-flex justify-content-between mt-2 mb-3'>
+               <div className='grid mt-2 mb-3'>
                      <label htmlFor="Linear" className='labelButton'>Linear</label>
                      <label htmlFor="Radial" className='labelButton'>Radial</label>
                      <label htmlFor="Conic" className='labelButton'>Conic</label>
@@ -105,7 +129,7 @@ useEffect(()=>{
                      <label htmlFor="left" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp}  className="left" />
                      </label>
-                     {style === "Radial" ? <label htmlFor="center" className='labelButton'></label>:<div></div>}
+                     {style === "Radial" ? <label htmlFor="center" className='labelButton'>O</label>:<div></div>}
                      <label htmlFor="right" className='labelButton'>
                         <FontAwesomeIcon icon={faArrowUp}  className="right" />
                      </label>
@@ -189,17 +213,17 @@ useEffect(()=>{
 
             <div className='colors'>
                <label>Colors</label>
-               <div className='d-flex justify-content-between mt-2 mb-3'>
-                  <input type="color" className='labelButton' onChange={(event)=>{changeColor(event, 'color1')}}/>
-                  <input type="color" className='labelButton' onChange={(event)=>{changeColor(event, 'color2')}}/>
-                  <button className='labelButton'>Random</button>
+               <div className='grid mt-2 mb-3'>
+                  <input type="color" className='labelButton' value={colors.color1} onChange={(event)=>{changeColor(event, 'color1')}}/>
+                  <input type="color" className='labelButton' value={colors.color2} onChange={(event)=>{changeColor(event, 'color2')}}/>
+                  <button className='labelButton' onClick={()=>getRandomHEXColors()}>Random</button>
                </div>
             </div>
 
 
             <div>
                <label>Output format</label>
-               <div className='outputFormat mt-2 mb-4'>
+               <div className='outputFormat mt-2 mb-4 grid'>
                   <label htmlFor="Linear3" className='labelButton'>Hex</label>
                   <label htmlFor="Linear4" className='labelButton'>Rgba</label>
                   <div className='d-none'>

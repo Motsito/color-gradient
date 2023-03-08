@@ -4,7 +4,7 @@ $selectedInput-Background: #313a42;
 $dark-text: #ceddec;
 
 .side-content{
-    width: 20em;
+    width: 350px;
     background-color: $dark-background;
     padding: 30px 32px;
     color: $dark-text;
@@ -30,13 +30,13 @@ $dark-text: #ceddec;
     input[type='color']{
         padding:0;
     }
-    .labelButton:focus,.labelButton:hover,input:focus{
+    .label::-moz-selection,.labelButton:hover,input:focus{
         background-color: $gray-background;
         outline: 2px solid blue;
     }
     .grid{
         display:grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, .02fr);
         gap: 8px;
     }
 
@@ -64,10 +64,7 @@ $dark-text: #ceddec;
     .bottomRight{
         transform:rotate(135deg)
     }
-    .outputFormat{
-        display:grid;
-        grid-template-columns: repeat(3, 1fr);
-    }
+
     .get{
         button{
             width: 256px;
