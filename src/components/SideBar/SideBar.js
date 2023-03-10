@@ -26,14 +26,16 @@ export default function SideBar() {
    const[selectedLabels, setSelectedLabels] = useState(["Linear","topLeft","Hex"])
    //useffect that randomizes and select the settings for the first render
    useEffect(()=>{
+      //color1=530087&color2=72db2b & style=linear& direction=dtl
+      console.log(stylesList[style].description,directionsList[style][currentDirection],colors.color1,colors.color2)
       getRandomHEXColors()
       changeDirection(directionsList[style].topLeft,"topLeft")
    },[])
 
    //useeffect that controls changes occured in colors and direction for the display to render
-useEffect(()=>{
+   useEffect(()=>{
       setColorGradient(stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")")
-},[colors, direction])
+   },[colors, direction])
 
    //function that allows color change in state
 
@@ -79,16 +81,44 @@ const setClassSelected = (event, index)=>{
    setSelectedLabels(newSelectedLabels);
 }
 
+//function that turns Hex into RGBA
+function hexToRgba(hex, alpha) {
+   let r = parseInt(hex.slice(1, 3), 16),
+   g = parseInt(hex.slice(3, 5), 16),
+   b = parseInt(hex.slice(5, 7), 16);
+
+   if (alpha === undefined) {
+      alpha = 1;
+   }
+
+   return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+}
+
 //funtion that gives css in HEX
 
-const getCSS = () => { 
+const getCSS = () => {
+   if(selectedLabels[2]==="Hex"){
+      const gradientAsString = JSON.stringify(colorGradient);
+      navigator.clipboard.writeText(gradientAsString)
+      console.log(gradientAsString)
+   }else{
+      let RGBAColor1 = hexToRgba(colors.color1)
+      let RGBAColor2 = hexToRgba(colors.color2)
+      let newRGBACSS = stylesList[style].description+"("+directionsList[style][currentDirection]+","+RGBAColor1+","+RGBAColor2+")"
+      const gradientAsString = JSON.stringify(newRGBACSS);
+      navigator.clipboard.writeText(gradientAsString)
+      console.log(gradientAsString)
+   }
    //stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")"
-   const gradientAsString = JSON.stringify(colorGradient);
-   navigator.clipboard.writeText(gradientAsString)
-   console.log(colorGradient)
-
 } 
 
+//function that gives shared link
+const getSharedLink = () => {
+   let sharedLink = "color1="+colors.color1+"&"+"color2="+colors.color2+"&"+"style="+style+"&"+"direction="+currentDirection
+   const LinkAsString = JSON.stringify(sharedLink);
+   navigator.clipboard.writeText(LinkAsString)
+   console.log(LinkAsString)
+}
 
    return (
       <div className={darkMode ? "side-content darkMode": "lightMode side-content"}>
@@ -244,7 +274,7 @@ const getCSS = () => {
                      type="radio" 
                      name="output" 
                      id="Hex"
-                     onChange={(event)=>changeDirection(directionsList[style].bottomRight, "bottomRight", event, 2)}
+                     onChange={(event)=>setClassSelected(event, 2)}
                      />
                      
                      <input 
@@ -260,8 +290,8 @@ const getCSS = () => {
          </div>
 
          <div className='get'>
-            <button onClick={()=>{getCSS()}}>Get CSS</button>
-            <button>Get Share Link</button>
+            <button onClick={()=>getCSS()}>Get CSS</button>
+            <button onClick={()=>getSharedLink()}>Get Share Link</button>
          </div>
       </div>
   )

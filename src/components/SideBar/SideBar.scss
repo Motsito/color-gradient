@@ -20,6 +20,9 @@ $white-hover: #f1f4f8;
     .labelButton:hover,.selected{
         background-color: $white-hover;
     }
+    button{
+        background-color: $white-background;
+    }
     .get{
         button{
             background: $white-hover;
@@ -39,6 +42,9 @@ $white-hover: #f1f4f8;
     }
     .labelButton:hover,.selected{
         background-color: $gray-background;
+    }
+    button{
+        background-color: $dark-background;
     }
     .get{
         button{
