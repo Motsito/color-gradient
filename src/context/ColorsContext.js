@@ -20,7 +20,7 @@ export const ColorsProvider = ({children}) => {
     const directionsList = {
         Linear: {
             topLeft: "to right bottom",
-            top: " ",
+            top: "180deg",
             topRight: "to left bottom",
             left: "to right",
             right: "to left",

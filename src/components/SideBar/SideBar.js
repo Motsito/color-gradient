@@ -31,11 +31,7 @@ export default function SideBar() {
 
    //useeffect that controls changes occured in colors and direction for the display to render
 useEffect(()=>{
-   if(direction === directionsList.Linear.top){
-      setColorGradient(stylesList[style].description+"("+colors.color1+","+colors.color2+")")
-   }else {
       setColorGradient(stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")")
-   }
 },[colors, direction])
 
    //function that allows color change in state
