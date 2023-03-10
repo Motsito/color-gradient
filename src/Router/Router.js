@@ -1,23 +1,13 @@
 import React from 'react'
-import Main from './routes/Main';
-import { createRoot } from "react-dom/client";
-import {
-    createBrowserRouter,
-    RouterProvider
-} from "react-router-dom";
+import { Route, Routes,BrowserRouter} from "react-router-dom"
+import Main from "./Routes/Main"
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: (
-            <Main />
-        ),
-    },
-    {
-        path: "about",
-        element: <div>About</div>,
-    },
-]);
-createRoot(document.getElementById("root")).render(
-    <RouterProvider router={router} />
-);
+export default function Router() {
+   return (
+      <BrowserRouter>
+         <Routes>
+            <Route path="/" element={<Main />}/>
+         </Routes>
+      </BrowserRouter>
+   )
+}
