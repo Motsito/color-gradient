@@ -1,22 +1,66 @@
+//dark theme colors
+
 $dark-background: #26293a;
 $gray-background: #3d4853;
 $selectedInput-Background: #313a42;
 $dark-text: #ceddec;
 
+//white theme colors
+
+$white-text: #3d4853;
+$white-background: #ffffff;
+$white-hover: #f1f4f8;
+.lightMode{
+    background: $white-background;
+    color: $white-text;
+    .labelButton{
+        border: 2px solid $white-hover;
+        color:$white-text;
+    }
+    .labelButton:hover,.selected{
+        background-color: $white-hover;
+    }
+    .get{
+        button{
+            background: $white-hover;
+            color: $white-text;
+        }
+        button:hover{
+            background-color: #26293a;
+            color:white;
+        }
+    }
+}
+.darkMode{
+    background-color: $dark-background;
+    color: $dark-text;
+    .labelButton{
+        border: 2px solid $gray-background;
+    }
+    .labelButton:hover,.selected{
+        background-color: $gray-background;
+    }
+    .get{
+        button{
+            background: $gray-background;
+            color: #ceddec;
+        }
+        button:hover{
+            background-color: $dark-text;
+            color:$dark-background;
+        }
+    }
+}
 .side-content{
     width: 350px;
-    background-color: $dark-background;
     padding: 30px 32px;
-    color: $dark-text;
     font-weight: 700;
     overflow: hidden;
-    
+
     .labelButton{
-        background-color: $dark-background;
         text-align: center;
         width: 80px;
         height: 32px;
-        border: 2px solid $gray-background;
         border-radius: 6px;
         font-size: .9rem;
         font-weight: 600;
@@ -24,14 +68,26 @@ $dark-text: #ceddec;
         justify-content: center;
         align-items: center;
     }
+        .get{
+        button{
+            width: 256px;
+            height: 48px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 12px;
+            margin-left: 0;
+            font-size: .8125rem;
+            font-weight: 600;
+            line-height: 3rem;
+            text-decoration: none;
+            border:none;
+        }
+    }
     button{
         color:$dark-text;
     }
     input[type='color']{
         padding:0;
-    }
-    .labelButton:hover,input[type="radio"]:checked + label,.selected {
-        background-color: $gray-background;
     }
     .grid{
         display:grid;
@@ -62,27 +118,5 @@ $dark-text: #ceddec;
     }
     .bottomRight{
         transform:rotate(135deg)
-    }
-
-    .get{
-        button{
-            width: 256px;
-            height: 48px;
-            background: $gray-background;
-            color: #ceddec;
-            text-align: center;
-            border-radius: 6px;
-            margin-top: 12px;
-            margin-left: 0;
-            font-size: .8125rem;
-            font-weight: 600;
-            line-height: 3rem;
-            text-decoration: none;
-            border:none;
-        }
-        button:hover{
-            background-color: $dark-text;
-            color:$dark-background;
-        }
     }
 }

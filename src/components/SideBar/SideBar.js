@@ -13,6 +13,7 @@ export default function SideBar() {
       stylesList,
       direction,
       directionsList,
+      colorGradient,
       setColors, 
       setDarkMode,
       setStyle,
@@ -78,9 +79,19 @@ const setClassSelected = (event, index)=>{
    setSelectedLabels(newSelectedLabels);
 }
 
+//funtion that gives css in HEX
+
+const getCSS = () => { 
+   //stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")"
+   const gradientAsString = JSON.stringify(colorGradient);
+   navigator.clipboard.writeText(gradientAsString)
+   console.log(colorGradient)
+
+} 
+
 
    return (
-      <div className="side-content">
+      <div className={darkMode ? "side-content darkMode": "lightMode side-content"}>
          <div className='mb-4 d-flex justify-content-between' >
             <h4 className='w-25'>CSS GRADIENT GENERATOR</h4>
             {
@@ -249,7 +260,7 @@ const setClassSelected = (event, index)=>{
          </div>
 
          <div className='get'>
-            <button>Get CSS</button>
+            <button onClick={()=>{getCSS()}}>Get CSS</button>
             <button>Get Share Link</button>
          </div>
       </div>
