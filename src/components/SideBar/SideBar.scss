@@ -30,9 +30,8 @@ $dark-text: #ceddec;
     input[type='color']{
         padding:0;
     }
-    .label::-moz-selection,.labelButton:hover,input:focus{
+    .labelButton:hover,input[type="radio"]:checked + label,.selected {
         background-color: $gray-background;
-        outline: 2px solid blue;
     }
     .grid{
         display:grid;
