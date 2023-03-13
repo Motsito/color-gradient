@@ -3,8 +3,16 @@ import ColorsContext from '../../context/ColorsContext'
 import "./SideBar.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon, faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { useParams } from 'react-router-dom'
 
 export default function SideBar() {
+
+   const {
+      c1,
+      c2,
+      gt,
+      gd
+   } = useParams()
 
    const { 
       colors,
@@ -23,7 +31,7 @@ export default function SideBar() {
 
 
    const [currentDirection, setCurrentDirecction] = useState("topLeft")
-   const[selectedLabels, setSelectedLabels] = useState(["Linear","topLeft","Hex"])
+   const [selectedLabels, setSelectedLabels] = useState(["Linear","topLeft","Hex"])
    const [buttonText, setButtonText] = useState(
       {
          button1:"Get CSS", 
@@ -33,8 +41,18 @@ export default function SideBar() {
 
    //useffect that randomizes and select the settings for the first render
    useEffect(()=>{
-      getRandomHEXColors()
-      changeDirection(directionsList[style].topLeft,"topLeft")
+      if(c1&&c2&&gt&&gd){
+         let newColors = { color1: "#" + c1, color2: "#" + c2};
+
+
+         setColors(newColors);
+         setStyle(stylesList[gt].name);
+         changeDirection(directionsList[gt][gd], gd);
+         setSelectedLabels([gt, gd, "Hex"])
+      }else{
+         getRandomHEXColors()
+         changeDirection(directionsList[style].topLeft, "topLeft")
+      }
    },[])
 
 
@@ -137,10 +155,16 @@ export default function SideBar() {
 
 //function that gives shared link
    const getSharedLink = (oldText, currentButton) => {
-      let sharedLink = "color1="+colors.color1+"&"+"color2="+colors.color2+"&"+"style="+style+"&"+"direction="+currentDirection
-      const LinkAsString = JSON.stringify(sharedLink);
+      let colorsArray = [colors.color1, colors.color2]
+      let result = colorsArray.map(function(color,index){
+         let splitedColor = color.split("");
+         splitedColor.splice(0,1);
+         return splitedColor.join("")
+      }
+      )
+      let sharedLink = "https://motsito.github.io/color-gradient/"+result[0]+"/"+result[1]+"/"+style+"/"+currentDirection;
 
-      navigator.clipboard.writeText(LinkAsString)
+      navigator.clipboard.writeText(sharedLink)
 
       changeButtonText(oldText, currentButton)
    }
