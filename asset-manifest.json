@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/color-gradient/static/css/main.48b732c6.css",
-    "main.js": "/color-gradient/static/js/main.be6a7499.js",
+    "main.css": "/color-gradient/static/css/main.7116b1e8.css",
+    "main.js": "/color-gradient/static/js/main.40f8fd2f.js",
     "static/js/787.4e3b263a.chunk.js": "/color-gradient/static/js/787.4e3b263a.chunk.js",
     "index.html": "/color-gradient/index.html",
-    "main.48b732c6.css.map": "/color-gradient/static/css/main.48b732c6.css.map",
-    "main.be6a7499.js.map": "/color-gradient/static/js/main.be6a7499.js.map",
+    "main.7116b1e8.css.map": "/color-gradient/static/css/main.7116b1e8.css.map",
+    "main.40f8fd2f.js.map": "/color-gradient/static/js/main.40f8fd2f.js.map",
     "787.4e3b263a.chunk.js.map": "/color-gradient/static/js/787.4e3b263a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.48b732c6.css",
-    "static/js/main.be6a7499.js"
+    "static/css/main.7116b1e8.css",
+    "static/js/main.40f8fd2f.js"
   ]
 }
