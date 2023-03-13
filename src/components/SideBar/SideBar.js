@@ -24,34 +24,41 @@ export default function SideBar() {
 
    const [currentDirection, setCurrentDirecction] = useState("topLeft")
    const[selectedLabels, setSelectedLabels] = useState(["Linear","topLeft","Hex"])
+   const [buttonText, setButtonText] = useState(
+      {
+         button1:"Get CSS", 
+         button2:"Get Share Link"
+      }
+   );
+
    //useffect that randomizes and select the settings for the first render
    useEffect(()=>{
-      //color1=530087&color2=72db2b & style=linear& direction=dtl
-      console.log(stylesList[style].description,directionsList[style][currentDirection],colors.color1,colors.color2)
       getRandomHEXColors()
       changeDirection(directionsList[style].topLeft,"topLeft")
    },[])
+
 
    //useeffect that controls changes occured in colors and direction for the display to render
    useEffect(()=>{
       setColorGradient(stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")")
    },[colors, direction])
 
-   //function that allows color change in state
 
+   //function that allows color change in state
    const changeColor = (event, colorname) => {
       setColors({
          ...colors, [colorname]: event.target.value
       })
    }
 
-   //function that provides random hex number for color
 
+   //function that provides random hex number for color
    function RandomColor() {
       let randomColor = Math.floor(Math.random()*16777215).toString(16);
       let hexColor = "#" + randomColor;
       return hexColor;
    }
+
 
    //function that gets both random colors
    const getRandomHEXColors=()=>{
@@ -60,12 +67,14 @@ export default function SideBar() {
       setColors({color1,color2})
    }
 
+
    //function that controls the change in any direction
    const changeDirection = (newDirection, news, event, index) => {
       setDirection(newDirection);
       setCurrentDirecction(news);
       event && setClassSelected(event,index)
    }
+
 
    //function that controls style segment change
    const changeStyle = (newStyle, event, index) => {
@@ -74,51 +83,68 @@ export default function SideBar() {
       setClassSelected(event,index)
    }
 
+
    //function that controls class definition after selection
-const setClassSelected = (event, index)=>{
+   const setClassSelected = (event, index)=>{
    let newSelectedLabels = [...selectedLabels];
    newSelectedLabels[index] = event.target.id;
    setSelectedLabels(newSelectedLabels);
 }
 
-//function that turns Hex into RGBA
-function hexToRgba(hex, alpha) {
-   let r = parseInt(hex.slice(1, 3), 16),
-   g = parseInt(hex.slice(3, 5), 16),
-   b = parseInt(hex.slice(5, 7), 16);
 
-   if (alpha === undefined) {
-      alpha = 1;
+//function that turns Hex into RGBA
+   function hexToRgba(hex, alpha) {
+      let r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
+
+      if (alpha === undefined) {
+         alpha = 1;
+      }
+
+      return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
    }
 
-   return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
-}
+//function that changes the buttons text
+   const changeButtonText = (oldText, currentButton) => {
+      setButtonText({...buttonText, [currentButton] : 'Yay! Copied to the clipboard'});
+
+      setTimeout(() => {
+         setButtonText({...buttonText, [currentButton] : oldText});
+      }, 1500);
+   }
+
 
 //funtion that gives css in HEX
+   const getCSS = (oldText, currentButton) => {
+      if(selectedLabels[2]==="Hex"){
+         const gradientAsString = JSON.stringify(colorGradient);
 
-const getCSS = () => {
-   if(selectedLabels[2]==="Hex"){
-      const gradientAsString = JSON.stringify(colorGradient);
-      navigator.clipboard.writeText(gradientAsString)
-      console.log(gradientAsString)
-   }else{
-      let RGBAColor1 = hexToRgba(colors.color1)
-      let RGBAColor2 = hexToRgba(colors.color2)
-      let newRGBACSS = stylesList[style].description+"("+directionsList[style][currentDirection]+","+RGBAColor1+","+RGBAColor2+")"
-      const gradientAsString = JSON.stringify(newRGBACSS);
-      navigator.clipboard.writeText(gradientAsString)
-      console.log(gradientAsString)
-   }
-   //stylesList[style].description+"("+directionsList[style][currentDirection]+","+colors.color1+","+colors.color2+")"
+         navigator.clipboard.writeText("background: " + gradientAsString)
+      }else{
+         let RGBAColor1 = hexToRgba(colors.color1)
+         let RGBAColor2 = hexToRgba(colors.color2)
+         let newRGBACSS = stylesList[style].description+"("+directionsList[style][currentDirection]+","+RGBAColor1+","+RGBAColor2+")"
+         const gradientAsString = JSON.stringify(newRGBACSS);
+
+         navigator.clipboard.writeText("background: " + gradientAsString)
+         console.log(gradientAsString)
+      }
+
+      changeButtonText(oldText, currentButton)
 } 
 
+
 //function that gives shared link
-const getSharedLink = () => {
-   let sharedLink = "color1="+colors.color1+"&"+"color2="+colors.color2+"&"+"style="+style+"&"+"direction="+currentDirection
-   const LinkAsString = JSON.stringify(sharedLink);
-   navigator.clipboard.writeText(LinkAsString)
-   console.log(LinkAsString)
-}
+   const getSharedLink = (oldText, currentButton) => {
+      let sharedLink = "color1="+colors.color1+"&"+"color2="+colors.color2+"&"+"style="+style+"&"+"direction="+currentDirection
+      const LinkAsString = JSON.stringify(sharedLink);
+
+      navigator.clipboard.writeText(LinkAsString)
+
+      changeButtonText(oldText, currentButton)
+   }
+
 
    return (
       <div className={darkMode ? "side-content darkMode": "lightMode side-content"}>
@@ -290,8 +316,8 @@ const getSharedLink = () => {
          </div>
 
          <div className='get'>
-            <button onClick={()=>getCSS()}>Get CSS</button>
-            <button onClick={()=>getSharedLink()}>Get Share Link</button>
+            <button onClick={()=>getCSS("Get CSS", "button1")}>{buttonText.button1}</button>
+            <button onClick={()=>getSharedLink("Get Share Link", "button2")}>{buttonText.button2}</button>
          </div>
       </div>
   )

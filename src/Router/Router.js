@@ -7,6 +7,7 @@ export default function Router() {
       <BrowserRouter>
          <Routes>
             <Route path="/" element={<Main />}/>
+            <Route path="/:c1&:c2" element={<Main />}/>
          </Routes>
       </BrowserRouter>
    )
