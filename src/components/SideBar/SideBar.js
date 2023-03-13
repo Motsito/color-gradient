@@ -165,15 +165,13 @@ export default function SideBar() {
       let sharedLink = "https://motsito.github.io/color-gradient/"+result[0]+"/"+result[1]+"/"+style+"/"+currentDirection;
 
       navigator.clipboard.writeText(sharedLink)
-
       changeButtonText(oldText, currentButton)
    }
 
-
    return (
-      <div className={darkMode ? "side-content darkMode": "lightMode side-content"}>
+      <div className={darkMode ? "side-content darkMode": "side-content lightMode "}>
          <div className='mb-4 d-flex justify-content-between' >
-            <h4 className='w-25'>CSS GRADIENT GENERATOR</h4>
+            <h4 className='w-25 CSSTitle'><a href="http://localhost:3000/">CSS GRADIENT GENERATOR</a></h4>
             {
                darkMode?
                <FontAwesomeIcon icon={faMoon} onClick={()=>{setDarkMode(false)}}/>:

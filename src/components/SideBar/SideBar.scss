@@ -12,7 +12,14 @@ $white-background: #ffffff;
 $white-hover: #f1f4f8;
 .lightMode{
     background: $white-background;
-    color: $white-text;
+    color: $white-text ;
+    text-decoration: none;
+
+    .CSSTitle,a{
+        text-decoration: none;
+        color:black;
+    }
+
     .labelButton{
         border: 2px solid $white-hover;
         color:$white-text;
@@ -37,6 +44,13 @@ $white-hover: #f1f4f8;
 .darkMode{
     background-color: $dark-background;
     color: $dark-text;
+    
+
+    CSSTitle,a{
+        text-decoration: none;
+        color:white;
+    }
+
     .labelButton{
         border: 2px solid $gray-background;
     }
@@ -62,6 +76,7 @@ $white-hover: #f1f4f8;
     padding: 30px 32px;
     font-weight: 700;
     overflow: hidden;
+
 
     .labelButton{
         text-align: center;
