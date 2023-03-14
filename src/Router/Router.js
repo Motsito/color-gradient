@@ -1,12 +1,13 @@
 import React from 'react'
-import { Route, Routes,BrowserRouter} from "react-router-dom"
+import { Route, Routes, BrowserRouter} from "react-router-dom"
 import Main from "./Routes/Main"
 
 export default function Router() {
    return (
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
          <Routes>
-            <Route path="/" element={<Main />}/>
+            <Route exact path="/" element={<Main />}/>
+            <Route path="/:c1/:c2/:gt/:gd" element={<Main />}/>
          </Routes>
       </BrowserRouter>
    )
